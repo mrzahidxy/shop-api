@@ -1,35 +1,34 @@
-// api.js
 const express = require('express');
-const connectDB = require('./config/db');
-const dotenv = require('dotenv');
-const cors = require('cors');
-
-// Importing route handlers
+const connectDB = require('./config/db')
+const dotenv = require('dotenv')
 const authRouter = require('./Routes/auth');
 const userRouter = require('./Routes/user');
-const productRouter = require('./Routes/product');
-const cartRouter = require('./Routes/cart');
-const orderRouter = require('./Routes/order');
-const stripeRouter = require('./Routes/stripe');
+const productRouter = require('./Routes/product')
+const stripeRouter = require('./Routes/stripe')
+const cors = require('cors')
 
 dotenv.config();
 
 // Initialize Express app
 const app = express();
 
-// Database connection
-connectDB();
+
+// Database connected
+connectDB()
 
 // Middleware
-app.use(express.json());
-app.use(cors());
+app.use(express.json())
+app.use(cors())
+
 
 // Routing
 app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);
-app.use('/api/carts', cartRouter);
-app.use('/api/orders', orderRouter);
-app.use('/api/checkout', stripeRouter);
+app.use('/api/checkout', stripeRouter)
 
-module.exports = app;
+app.listen(process.env.PORT || 8080, () => {
+    console.log('Backend is running');
+})
+
+module.exports = app
